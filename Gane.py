@@ -1,5 +1,5 @@
 # Wormy (a Nibbles clone)
-# By Al Sweigart al@inventwithpython.com
+# Original by Al Sweigart al@inventwithpython.com
 # http://inventwithpython.com/pygame
 # Released under a "Simplified BSD" license
 #
@@ -11,10 +11,9 @@ import random, pygame, sys, time
 from pygame.locals import *
 
 FPS = 15
-
-WINDOWWIDTH = 640
-WINDOWHEIGHT = 480
-CELLSIZE = 20
+WINDOWWIDTH = 1800
+WINDOWHEIGHT = 960
+CELLSIZE = 40
 
 
 assert WINDOWWIDTH % CELLSIZE == 0, "Window width must be a multiple of cell size."
@@ -71,7 +70,6 @@ def runGame(lives):
     score = 0
     Color1 = DARKGREEN
     Color2 = GREEN
-
 
     # Set a random start point.
     startx = random.randint(5, CELLWIDTH - 6)
@@ -163,21 +161,21 @@ def runGame(lives):
             del wormCoords[-1] # remove worm's tail segment
 
         if wormCoords[HEAD]['x'] == badApple['x'] and wormCoords[HEAD]['y'] == badApple['y']:
-            terminate()
+            showGameOverScreen()
 
         if wormCoords[HEAD]['x'] == badApple2['x'] and wormCoords[HEAD]['y'] == badApple2['y']:
-            terminate()
+            showGameOverScreen()
 
         if wormCoords[HEAD]['x'] == badApple3['x'] and wormCoords[HEAD]['y'] == badApple3['y']:
-            terminate()
+            showGameOverScreen()
 
         if wormCoords[HEAD]['x'] == badApple4['x'] and wormCoords[HEAD]['y'] == badApple4['y']:
-            terminate()
+            showGameOverScreen()
 
         if wormCoords[HEAD]['x'] == badApple5['x'] and wormCoords[HEAD]['y'] == badApple5['y']:
-            terminate()
+            showGameOverScreen()
         if wormCoords[HEAD]['x'] == badApple6['x'] and wormCoords[HEAD]['y'] == badApple6['y']:
-            terminate()
+            showGameOverScreen()
 
         # check if worm has eaten a teleport apple
         if wormCoords[HEAD]['x'] == teleportApple['x'] and wormCoords[HEAD]['y'] == teleportApple['y']:
@@ -282,7 +280,7 @@ def checkForKeyPress():
 
 
 def showStartScreen():
-    titleFont = pygame.font.Font('freesansbold.ttf', 100)
+    titleFont = pygame.font.Font('freesansbold.ttf', 200)
     titleSurf1 = titleFont.render('Wormy!', True, WHITE, DARKGREEN)
     titleSurf2 = titleFont.render('Wormy!', True, GREEN)
 
@@ -326,17 +324,12 @@ def showGameOverScreen():
 
     gameSurf = gameOverFont.render('Game', True, WHITE)
     overSurf = gameOverFont.render('Over', True, WHITE)
-    scoreSurf = score.render('Score: %s' % (SCORES[len(SCORES)-1]), True, WHITE)
-
     gameRect = gameSurf.get_rect()
     overRect = overSurf.get_rect()
-    scoreRect = scoreSurf.get_rect()
 
     gameRect.midtop = (WINDOWWIDTH / 2, 10)
     overRect.midtop = (WINDOWWIDTH / 2, gameRect.height + 10 + 25)
-    scoreRect.midtop = (WINDOWWIDTH / 2, gameRect.height + 10 + 100)
 
-    DISPLAYSURF.blit(scoreSurf, scoreRect)
     DISPLAYSURF.blit(gameSurf, gameRect)
     DISPLAYSURF.blit(overSurf, overRect)
 
@@ -344,6 +337,7 @@ def showGameOverScreen():
     pygame.display.update()
     pygame.time.wait(500)
     checkForKeyPress() # clear out any key presses in the event queue
+    terminate()
 
     while True:
         if checkForKeyPress():
