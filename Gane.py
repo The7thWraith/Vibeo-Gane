@@ -2,9 +2,7 @@
 # Original by Al Sweigart al@inventwithpython.com
 # http://inventwithpython.com/pygame
 # Released under a "Simplified BSD" license
-#
-# Skidded and Modified by Wraith
-# Ok guys I actually modified this a shit ton its not fully skidded please don't hu-
+# Modified by Wraith
 
 
 import random, pygame, sys, time
